@@ -19,7 +19,7 @@ export default class MyPlugin extends Plugin {
 		// This creates an icon in the left ribbon.
 		const ribbonIconEl = this.addRibbonIcon('dice', 'Sample Plugin', (evt: MouseEvent) => {
 			// Called when the user clicks the icon.
-			new Notice('This is a notice!');
+			new Notice('changed!');
 		});
 		// Perform additional things with the ribbon
 		ribbonIconEl.addClass('my-plugin-ribbon-class');
@@ -38,11 +38,12 @@ export default class MyPlugin extends Plugin {
 		});
 		// This adds an editor command that can perform some operation on the current editor instance
 		this.addCommand({
-			id: 'sample-editor-command',
-			name: 'Sample editor command',
+			id: 'calculate-selected',
+			name: 'Calcuate Selection',
 			editorCallback: (editor: Editor, view: MarkdownView) => {
-				console.log(editor.getSelection());
-				editor.replaceSelection('Sample Editor Command');
+				let selection = editor.getSelection();
+                // FIXME: make this save
+                editor.replaceRange("="+eval(selection),editor.getCursor());
 			}
 		});
 		// This adds a complex command that can check whether the current state of the app allows execution of the command
